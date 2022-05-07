@@ -1,5 +1,5 @@
 -- Databricks notebook source
--- MAGIC %md #### Create text widget with the name "country" with a default value of USA
+-- MAGIC %md #### Create a text widget "country" with a default value of USA
 
 -- COMMAND ----------
 
@@ -7,7 +7,7 @@ CREATE WIDGET TEXT country DEFAULT 'USA'
 
 -- COMMAND ----------
 
--- MAGIC %md #### Remove 'country' widgets
+-- MAGIC %md #### Remove 'country' widget
 
 -- COMMAND ----------
 
@@ -15,7 +15,7 @@ REMOVE WIDGET country
 
 -- COMMAND ----------
 
--- MAGIC %md #### Create Dropdown widget with the name "countries" with a default value of "USA" and multiple values to select from
+-- MAGIC %md #### Create a Dropdown widget "countries" with a default value of "USA" and multiple values to select from
 
 -- COMMAND ----------
 
@@ -23,7 +23,7 @@ CREATE WIDGET DROPDOWN countries DEFAULT 'USA' CHOICES SELECT country FROM (SELE
 
 -- COMMAND ----------
 
--- MAGIC %md #### Remove 'countries' widgets
+-- MAGIC %md #### Remove 'countries' widget
 
 -- COMMAND ----------
 
@@ -31,9 +31,8 @@ REMOVE WIDGET countries
 
 -- COMMAND ----------
 
--- MAGIC %md #### Passing widget values to a SQL query. <br/><br/> We have 2 Options :- 1. getArgument 2. $parameter
--- MAGIC <br/>To use the widget values as parameters I am going to create a dataframe. On top of the Dataframe we will create a temporary view. < br/> AS part of the last step, we will pass the widget value to the Temporary view and ifilter down the resoults. 
--- MAGIC <br/>Creation of Data frame and temporary view will be done in python. The filtering of the temporary view will be done in SQL
+-- MAGIC %md #### Now we will look into passing widget values to a SQL query. There are 2 options for getting the widget values <ol><li>getArgument</li><li>$parameter</li></ol> <br />
+-- MAGIC To use the widget values as parameters, I am going to create a dataframe. Once the data frame is created we will create a temporary view from the data Frame. As part of the last step, we will pass the widget value to the Temporary view and filter down the results. Creation of data frame and temporary view will be completed in python using the magic command %python. The filtering of the temporary view using the parameter values will be completed in SQL
 
 -- COMMAND ----------
 
@@ -54,7 +53,7 @@ SELECT * FROM vw_population
 
 -- COMMAND ----------
 
--- MAGIC %md #### Create a Dropdown widget 'country' by using values from the vw_population view
+-- MAGIC %md #### Create a Dropdown widget 'country' based on the values from the vw_population view
 
 -- COMMAND ----------
 
@@ -62,7 +61,15 @@ CREATE WIDGET DROPDOWN country DEFAULT 'United States' CHOICES SELECT DISTINCT c
 
 -- COMMAND ----------
 
+-- MAGIC %md #### Add a where clause to the temporary view based on the value from the the 'country" filter using getArgument
+
+-- COMMAND ----------
+
 SELECT population, getArgument("country") as country FROM vw_population WHERE country = getArgument("country")
+
+-- COMMAND ----------
+
+-- MAGIC %md #### Add a where clause to the temporary view based on the value from the the 'country" filter using $parameter
 
 -- COMMAND ----------
 
