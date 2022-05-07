@@ -75,3 +75,51 @@ SELECT population, '$country' as country FROM vw_population WHERE country = '$co
 -- COMMAND ----------
 
 REMOVE WIDGET country
+
+-- COMMAND ----------
+
+-- MAGIC %md #### Create a Multi Select widget 'country_multiselect' by using values from the vw_population view
+
+-- COMMAND ----------
+
+CREATE WIDGET MULTISELECT country_multiselect DEFAULT 'United States' CHOICES SELECT DISTINCT country FROM vw_population
+
+-- COMMAND ----------
+
+-- MAGIC %md #### Create a Combo Box widget 'country_combobox' by using values from the vw_population view
+
+-- COMMAND ----------
+
+CREATE WIDGET COMBOBOX country_combobox DEFAULT 'United States' CHOICES SELECT DISTINCT country FROM vw_population
+
+-- COMMAND ----------
+
+-- MAGIC %md #### Get selected value of the Combo Box widget 'country_combobox'
+
+-- COMMAND ----------
+
+SELECT '$country_combobox' As country
+
+-- COMMAND ----------
+
+-- MAGIC %md #### Get selected value of the Multi Select widget 'country_multiselect'
+
+-- COMMAND ----------
+
+SELECT '$country_multiselect' AS countries
+
+-- COMMAND ----------
+
+-- MAGIC %md #### Remove all the widgets
+
+-- COMMAND ----------
+
+REMOVE WIDGET country
+
+-- COMMAND ----------
+
+REMOVE WIDGET country_combobox
+
+-- COMMAND ----------
+
+REMOVE WIDGET country_multiselect
